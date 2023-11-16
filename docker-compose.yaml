@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  api:
+    build: ./api
+    container_name: bd_c_compose
+    ports:
+      - '4001:4000'
+
+  myblog:
+    build: ./myblog
+    container_name: app_c_compose
+    ports:
+      - '3001:3000'
+    stdin_open: true
