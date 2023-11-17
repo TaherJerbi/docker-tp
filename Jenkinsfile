@@ -15,16 +15,16 @@ pipeline {
         stage('Build Docker Images'){
             steps{
                 echo "******** BUILDING ********"
-                bat 'docker build -f ./api/Dockerfile -t vicyyn/docker-tp-api:%BUILD_NUMBER% .'
-		        bat 'docker build -f ./myblog/Dockerfile -t vicyyn/docker-tp-myblog:%BUILD_NUMBER% .'
+                bat 'docker build -f ./api/Dockerfile -t taherjerbiinsat/docker-tp-api:%BUILD_NUMBER% .'
+		        bat 'docker build -f ./myblog/Dockerfile -t taherjerbiinsat/docker-tp-myblog:%BUILD_NUMBER% .'
             }
         }
 
         stage('Test Run Containers'){
             steps{
                 echo "******** TESTING ********"
-                bat 'docker run -d --name test-api vicyyn/docker-tp-api:%BUILD_NUMBER%'
-		        bat 'docker run -d --name test-myblog vicyyn/docker-tp-myblog:%BUILD_NUMBER%'
+                bat 'docker run -d --name test-api taherjerbiinsat/docker-tp-api:%BUILD_NUMBER%'
+		        bat 'docker run -d --name test-myblog taherjerbiinsat/docker-tp-myblog:%BUILD_NUMBER%'
             }
         }
 
@@ -38,8 +38,8 @@ pipeline {
                 ]) {
                     bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'
                 }
-                bat 'docker push vicyyn/docker-tp-api:%BUILD_NUMBER%'
-                bat 'docker push vicyyn/docker-tp-myblog:%BUILD_NUMBER%'
+                bat 'docker push taherjerbiinsat/docker-tp-api:%BUILD_NUMBER%'
+                bat 'docker push taherjerbiinsat/docker-tp-myblog:%BUILD_NUMBER%'
             }
         }
 
@@ -50,8 +50,8 @@ pipeline {
                 bat 'docker stop test-myblog'
                 bat 'docker rm test-api'
                 bat 'docker rm test-myblog'
-                bat 'docker rmi vicyyn/docker-tp-api:%BUILD_NUMBER%'
-                bat 'docker rmi vicyyn/docker-tp-myblog:%BUILD_NUMBER%'
+                bat 'docker rmi taherjerbiinsat/docker-tp-api:%BUILD_NUMBER%'
+                bat 'docker rmi taherjerbiinsat/docker-tp-myblog:%BUILD_NUMBER%'
             }
         }
     }
