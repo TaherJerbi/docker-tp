@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: docker-tp-myblog
+          image: vicyyn/docker-tp-myblog:v2-release
+          ports:
+            - containerPort: 3000
+        - name: docker-tp-api
+          image: vicyyn/docker-tp-api:v2-release
+          ports:
+            - containerPort: 4000

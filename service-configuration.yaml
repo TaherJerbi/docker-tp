@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: myservice
+spec:
+  selector:
+    app: myapp
+  ports:
+    - protocol: TCP
+      port: 3000
+      name: myblog
+      targetPort: 3000
+    - protocol: TCP
+      port: 4000
+      name: api
+      targetPort: 4000
+
