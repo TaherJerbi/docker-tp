@@ -8,3 +8,8 @@ test('test 2 runs successfully', () => {
   expect(false).toBe(false);
 });
 
+test('test 3 runs successfully', () => {
+  expect(true).toBe(true);
+  expect(false).toBe(false);
+});
+
