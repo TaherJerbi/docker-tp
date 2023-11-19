@@ -15,16 +15,16 @@ pipeline {
         stage('Build Docker Images'){
             steps{
                 echo "******** BUILDING ********"
-                bash 'docker build -f ./api/Dockerfile -t taherjerbiinsat/docker-tp-api:%BUILD_NUMBER% .'
-		        bash 'docker build -f ./myblog/Dockerfile -t taherjerbiinsat/docker-tp-myblog:%BUILD_NUMBER% .'
+                sh 'docker build -f ./api/Dockerfile -t taherjerbiinsat/docker-tp-api:%BUILD_NUMBER% .'
+		        sh 'docker build -f ./myblog/Dockerfile -t taherjerbiinsat/docker-tp-myblog:%BUILD_NUMBER% .'
             }
         }
 
         stage('Test Run Containers'){
             steps{
                 echo "******** TESTING ********"
-                bash 'docker run -d --name test-api taherjerbiinsat/docker-tp-api:%BUILD_NUMBER%'
-		        bash 'docker run -d --name test-myblog taherjerbiinsat/docker-tp-myblog:%BUILD_NUMBER%'
+                sh 'docker run -d --name test-api taherjerbiinsat/docker-tp-api:%BUILD_NUMBER%'
+		        sh 'docker run -d --name test-myblog taherjerbiinsat/docker-tp-myblog:%BUILD_NUMBER%'
             }
         }
 
@@ -36,22 +36,22 @@ pipeline {
                     usernameVariable: 'DOCKER_USERNAME',
                     passwordVariable: 'DOCKER_PASSWORD')
                 ]) {
-                    bash 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'
+                    sh 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'
                 }
-                bash 'docker push taherjerbiinsat/docker-tp-api:%BUILD_NUMBER%'
-                bash 'docker push taherjerbiinsat/docker-tp-myblog:%BUILD_NUMBER%'
+                sh 'docker push taherjerbiinsat/docker-tp-api:%BUILD_NUMBER%'
+                sh 'docker push taherjerbiinsat/docker-tp-myblog:%BUILD_NUMBER%'
             }
         }
 
         stage('Clean Environment'){
             steps{
                 echo "******** CLEANING ********"
-                bash 'docker stop test-api'
-                bash 'docker stop test-myblog'
-                bash 'docker rm test-api'
-                bash 'docker rm test-myblog'
-                bash 'docker rmi taherjerbiinsat/docker-tp-api:%BUILD_NUMBER%'
-                bash 'docker rmi taherjerbiinsat/docker-tp-myblog:%BUILD_NUMBER%'
+                sh 'docker stop test-api'
+                sh 'docker stop test-myblog'
+                sh 'docker rm test-api'
+                sh 'docker rm test-myblog'
+                sh 'docker rmi taherjerbiinsat/docker-tp-api:%BUILD_NUMBER%'
+                sh 'docker rmi taherjerbiinsat/docker-tp-myblog:%BUILD_NUMBER%'
             }
         }
     }
