@@ -12,20 +12,25 @@ pipeline {
             }
         }
 
-        stage('Build Docker Images') {
+        stage('Test API') {
             steps {
-                echo "******** BUILDING ********"
                 script {
-                    def apiImage = docker.build("taherjerbiinsat/docker-tp-api:${env.BUILD_NUMBER}", './api')
-                    def myblogImage = docker.build("taherjerbiinsat/docker-tp-myblog:${env.BUILD_NUMBER}", './myblog')
+                    echo "******** TESTING API ********"
+                    dir('api') {
+                        sh 'npm install'
+                        sh 'npm test'
+                    }
                 }
             }
         }
 
-        stage('Push to Docker Hub') {
+        stage('Build and Push Docker Images') {
             steps {
-                echo "******** PUSHING ********"
                 script {
+                    echo "******** BUILDING ********"
+                    def apiImage = docker.build("taherjerbiinsat/docker-tp-api:${env.BUILD_NUMBER}", './api')
+                    def myblogImage = docker.build("taherjerbiinsat/docker-tp-myblog:${env.BUILD_NUMBER}", './myblog')
+                    echo "******** PUSHING ********"
                     docker.withRegistry('', 'docker_hub_credentials') {
                         apiImage.push()
                         myblogImage.push()
