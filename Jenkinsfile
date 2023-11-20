@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {nodejs "node"}
     environment {
-        GIT_REPO_URL = 'https://github.com/Hatem902/docker-tp'
+        GIT_REPO_URL = 'https://github.com/TaherJerbi/docker-tp'
     }
     stages {
         stage('Fetch from GitHub') {
