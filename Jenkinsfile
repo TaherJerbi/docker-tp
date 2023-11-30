@@ -3,6 +3,7 @@ pipeline {
     tools {nodejs "node"}
     environment {
         GIT_REPO_URL = 'https://github.com/TaherJerbi/docker-tp'
+        BUILD_NUMBER = "${env.BUILD_NUMBER}"
     }
     stages {
         stage('Fetch from GitHub') {
@@ -41,7 +42,7 @@ pipeline {
 
         stage('Déploiement de l’Infrastructure IaC') {
             steps {
-                sh 'terraform init && terraform apply -auto-approve -var "docker_image_tag=${env.BUIL_NUMBER}"'
+                sh 'terraform init && terraform apply -auto-approve -var "docker_image_tag=$BUILD_NUMBER"'
             }
         }
     }
