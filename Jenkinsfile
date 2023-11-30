@@ -44,7 +44,7 @@ pipeline {
             steps {
                 sh 'docker kill $(docker ps -q)' 
                 sh 'docker rm -f $(docker ps -a -q)'
-                sh 'docker rmi $(docker images -q)'
+                sh 'docker rmi -f $(docker images -q)'
 
                 sh 'terraform init && terraform apply -auto-approve -var "docker_image_tag=$BUILD_NUMBER"'
             }
