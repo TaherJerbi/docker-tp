@@ -41,18 +41,17 @@ pipeline {
         }
 
         stage('Déploiement de l’Infrastructure IaC') {
-            steps {
-              try {
-                  sh 'docker kill $(docker ps -q)' 
-                  sh 'docker rm -f $(docker ps -a -q)'
-                  sh 'docker rmi -f $(docker images -q)'
-              } catch (exc) {
-                  echo 'deleting docker failed'
-                }
+          steps {
+              catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                  sh 'docker kill $(docker ps -q) || true'
+                  sh 'docker rm -f $(docker ps -a -q) || true'
+                  sh 'docker rmi -f $(docker images -q) || true'
+              }
 
-                sh 'terraform init && terraform apply -auto-approve -var "docker_image_tag=$BUILD_NUMBER"'
-            }
+            sh 'terraform init && terraform apply -auto-approve -var "docker_image_tag=$BUILD_NUMBER"'
         }
+    }
+
     }
     post {
         always {
