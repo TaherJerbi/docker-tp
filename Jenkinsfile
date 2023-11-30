@@ -41,7 +41,7 @@ pipeline {
 
         stage('Déploiement de l’Infrastructure IaC') {
             steps {
-                sh 'terraform init && terraform apply -auto-approve -var "docker_image_tag" ${env.BUIL_NUMBER}'
+                sh 'terraform init && terraform apply -auto-approve -var "docker_image_tag=${env.BUIL_NUMBER}"'
             }
         }
     }
