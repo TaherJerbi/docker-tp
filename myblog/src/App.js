@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   const [blogs, setBlogs] = useState([])
   useEffect(() => {
-    fetch(`${window.location.hostname}:4000`)
+    fetch(`http://${window.location.hostname}:4000`)
       .then(res => res.json())
       .then(data => setBlogs(data))
   }, [])
