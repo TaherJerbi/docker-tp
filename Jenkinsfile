@@ -8,7 +8,7 @@ pipeline {
         stage('Fetch from GitHub') {
             steps {
                 echo "******** FETCHING ********"
-                git branch: 'jenkins', url: GIT_REPO_URL
+                git branch: 'master', url: GIT_REPO_URL
             }
         }
 
