@@ -42,8 +42,7 @@ pipeline {
 
         stage('Déploiement de l’Infrastructure IaC') {
             steps {
-                sh 'terraform destroy'
-                sh 'terraform init && terraform apply -auto-approve -var "docker_image_tag=$BUILD_NUMBER"'
+                sh 'terraform init && terraform destroy && terraform apply -auto-approve -var "docker_image_tag=$BUILD_NUMBER"'
             }
         }
     }
