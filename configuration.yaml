@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
       - name: docker-tp-myblog
-        image: vicyyn/docker-tp-myblog:v1-release
+        image: taherjerbiinsat/docker-tp-myblog:v1-release
         ports:
         - containerPort: 3000
       - name: docker-tp-api
-        image: vicyyn/docker-tp-api:v1-release
+        image: taherjerbiinsat/docker-tp-api:v1-release
         ports:
         - containerPort: 4000
