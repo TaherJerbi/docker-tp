@@ -42,7 +42,15 @@ pipeline {
 
         stage('Déploiement de l’Infrastructure IaC') {
             steps {
-                sh 'terraform init && terraform destroy && terraform apply -auto-approve -var "docker_image_tag=$BUILD_NUMBER"'
+              try {
+                  sh 'docker kill $(docker ps -q)' 
+                  sh 'docker rm -f $(docker ps -a -q)'
+                  sh 'docker rmi -f $(docker images -q)'
+              } catch (exc) {
+                  echo 'deleting docker failed'
+                }
+
+                sh 'terraform init && terraform apply -auto-approve -var "docker_image_tag=$BUILD_NUMBER"'
             }
         }
     }
