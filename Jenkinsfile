@@ -38,6 +38,12 @@ pipeline {
                 }
             }
         }
+
+        stage('Déploiement de l’Infrastructure IaC') {
+            steps {
+                sh 'terraform init && terraform apply -auto-approve'
+            }
+        }
     }
     post {
         always {
